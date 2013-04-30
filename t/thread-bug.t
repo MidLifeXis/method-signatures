@@ -19,6 +19,11 @@ use Test::More;
 
 plan skip_all => 'This test only relevant under threaded Perls' if !$has_threads;
 
+if ( defined( $Variable::Magic::VERSION ) ) {
+    plan skip_all => 'A dependent module (Variable::Magic) is not threadsafe on this platform'
+	unless &Variable::Magic::VMG_THREADSAFE();
+}
+
 use Method::Signatures;
 
 sub worker {
